@@ -11,10 +11,11 @@ import matplotlib.pyplot as plt
 
 #hyper parameters
 seed = 1
-num_epochs = 10
+num_epochs = 20
 num_classes = 10
-lr = 0.15
+lr = 0.1
 loss_fn = torch.nn.CrossEntropyLoss()
+batch_size = 512
 device = torch.device("cpu")
 
 class LeNet(nn.Module):
@@ -49,8 +50,8 @@ y_val_tensor = torch.tensor(y_val, dtype=torch.long)
 train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
 val_dataset = TensorDataset(X_val_tensor, y_val_tensor)
 
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
 print("training...")
 
