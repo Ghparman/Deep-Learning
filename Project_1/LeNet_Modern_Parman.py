@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 seed = 1
 num_epochs = 20
 num_classes = 10
-lr = 0.01
+lr = 0.001
 loss_fn = torch.nn.CrossEntropyLoss()
 batch_size = 32
 device = torch.device("cpu")
@@ -19,13 +19,13 @@ class LeNet(nn.Module):
     def __init__(self,lr,num_classes):
         super().__init__()
         self.Network = nn.Sequential(
-            nn.LazyConv2d(6, kernel_size=5, padding=2), nn.Sigmoid(),
-            nn.AvgPool2d(kernel_size=2, stride=2),
-            nn.LazyConv2d(16, kernel_size=5), nn.Sigmoid(),
-            nn.AvgPool2d(kernel_size=2, stride=2),
+            nn.LazyConv2d(6, kernel_size=5, padding=2), nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.LazyConv2d(16, kernel_size=5), nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Flatten(),
-            nn.LazyLinear(120), nn.Sigmoid(),
-            nn.LazyLinear(84), nn.Sigmoid(),
+            nn.LazyLinear(120), nn.ReLU(),
+            nn.LazyLinear(84), nn.ReLU(),
             nn.LazyLinear(num_classes))
 
     def forward(self, inputs):
@@ -103,13 +103,13 @@ plt.title(f"Training and Validation loss across {num_epochs} epochs")
 plt.xticks([i for i in range(1, num_epochs+1)])
 plt.legend(loc="upper right")
 plt.ylim(top=4, bottom=0)
-plt.savefig(f"./LeNet_figures/Loss_per_{num_epochs}_epochs.png")
+plt.savefig(f"./LeNet_Modern_Figures/Loss_per_{num_epochs}_epochs.png")
 plt.show()
 plt.close()
 
 plt.plot(range(1, num_epochs + 1), val_acc_per_epoch)
 plt.title(f"Validation accuracy across {num_epochs} epochs")
 plt.ylim(top=1, bottom=0)
-plt.savefig(f"./LeNet_figures/Accuracy_per_{num_epochs}_epochs.png")
+plt.savefig(f"./LeNet_Modern_Figures/Accuracy_per_{num_epochs}_epochs.png")
 plt.show()
 plt.close()
